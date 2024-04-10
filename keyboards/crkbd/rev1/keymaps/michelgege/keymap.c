@@ -17,19 +17,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-#define COMBO_COUNT 1
-#define TAPPING_TERM 180
+#include "features/achordion.h"
+
+#define COMBO_COUNT 9
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x6_3(
     //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        TG(3),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
+        TG(3),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_DEL,
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        KC_TAB,    KC_A,    KC_S,    MT(MOD_LCTL,KC_D),    MT(MOD_LSFT,KC_F),    MT(MOD_LALT,KC_G),                         MT(MOD_LALT,KC_H),    RSFT_T(KC_J),    MT(MOD_LCTL,KC_K),    KC_L, KC_SCLN, KC_QUOT,
+        KC_TAB,    KC_A,    KC_S,    MT(MOD_LCTL,KC_D),    MT(MOD_LSFT,KC_F),    MT(MOD_LALT,KC_G),       MT(MOD_LALT,KC_H),    RSFT_T(KC_J),    MT(MOD_LCTL,KC_K),    KC_L, KC_SCLN, KC_QUOT,
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ESC,
+        KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RALT,
     //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                    LT(2,KC_SPC), LT(4,KC_TAB),  MT(MOD_LSFT,KC_ESC),     LT(3,KC_ENT), KC_MS_BTN1, LT(1,KC_BSPC)
+                    LT(2,KC_SPC), KC_LSFT, KC_MS_BTN1,                     LT(1,KC_MS_BTN1),   LT(3,KC_TAB), LT(4,KC_ENT)
                                     //`--------------------------'  `--------------------------'
 
     ),
@@ -52,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         KC_WWW_REFRESH, QK_CAPS_WORD_TOGGLE, _______, KC_LEFT_ANGLE_BRACKET, KC_RIGHT_ANGLE_BRACKET, _______,                      KC_PERC,  KC_DLR, KC_LCBR, KC_RCBR, KC_EXLM,  KC_TILD,
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        _______, _______, _______, _______, KC_RIGHT_ANGLE_BRACKET, _______,                      KC_PIPE, KC_HASH, KC_LBRC, KC_RBRC, KC_AT, KC_RALT,
+        _______, _______, _______, KC_MINUS, KC_RIGHT_ANGLE_BRACKET, _______,                      KC_PIPE, KC_HASH, KC_LBRC, KC_RBRC, KC_AT, KC_RALT,
     //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         _______, _______,  _______,     _______, KC_MS_WH_UP, KC_MS_DOWN
                                         //`--------------------------'  `--------------------------'
@@ -83,7 +84,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-const uint16_t PROGMEM test_combo1[] = {KC_J, KC_K, COMBO_END};
+
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    if (!process_achordion(keycode, record)) { return false; }
+
+    return true;
+}
+
+bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record, uint16_t other_keycode, keyrecord_t* other_record) {
+
+    switch(tap_hold_keycode) {
+        case LT(2,KC_SPC):
+        case LT(1,KC_MS_BTN1):
+        case LT(3,KC_TAB):
+        case LT(4,KC_ENT):
+            return true;
+    }
+
+    return achordion_opposite_hands(tap_hold_record, other_record);
+}
+
+void matrix_scan_user(void) {
+    achordion_task();
+}
+
+const uint16_t PROGMEM backspace_combo[] = { MT(MOD_RSFT,KC_J), MT(MOD_LCTL,safe), COMBO_END };
+const uint16_t PROGMEM escape_combo[] = { MT(MOD_LSFT,KC_F), MT(MOD_LCTL,KC_D), COMBO_END };
+const uint16_t PROGMEM space_combo[] = { KC_S, MT(MOD_LCTL,KC_D), COMBO_END };
+const uint16_t PROGMEM enter_combo[] = { MT(MOD_LCTL,KC_K), KC_L, COMBO_END };
+const uint16_t PROGMEM click_combo[] = { KC_C, KC_V, COMBO_END };
+const uint16_t PROGMEM click_combo_2[] = { KC_M, KC_COMM, COMBO_END };
+const uint16_t PROGMEM click_combo_3[] = { MT(MOD_LSFT,KC_F), KC_R, COMBO_END };
+const uint16_t PROGMEM scroll_down_combo[] = {  MT(MOD_LALT,KC_G), KC_B, COMBO_END };
+const uint16_t PROGMEM scroll_up_combo[] = {  MT(MOD_LALT,KC_G), KC_T, COMBO_END };
+
+
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(test_combo1, KC_BSPC)
+    COMBO(backspace_combo, KC_BSPC),
+    COMBO(escape_combo, KC_ESC),
+    COMBO(space_combo, KC_SPC),
+    COMBO(enter_combo, KC_ENT),
+    COMBO(click_combo, KC_MS_BTN1),
+    COMBO(click_combo_2, KC_MS_BTN1),
+    COMBO(click_combo_3, KC_MS_BTN1),
+    COMBO(scroll_down_combo, KC_MS_WH_DOWN),
+    COMBO(scroll_up_combo, KC_MS_WH_UP),
 };
+
