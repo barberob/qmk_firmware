@@ -436,3 +436,11 @@ distclean: clean
 	echo -n 'Deleting *.bin, *.hex, and *.uf2 ... '
 	rm -f *.bin *.hex *.uf2
 	echo 'done.'
+
+.PHONY: mgg-flash
+mgg-flash:
+	make crkbd/rev1:michelgege:flash \
+	-e USER_NAME=idank \
+	-e POINTING_DEVICE=cirque35_trackpoint \
+	-e SIDE=right \
+	-j8
