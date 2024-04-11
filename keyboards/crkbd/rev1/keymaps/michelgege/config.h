@@ -36,3 +36,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TRACKPOINT_MULTIPLIER 4
 #define PS2_MOUSE_X_MULTIPLIER TRACKPOINT_MULTIPLIER
 #define PS2_MOUSE_Y_MULTIPLIER TRACKPOINT_MULTIPLIER
+#define CAPS_WORD_INVERT_ON_SHIFT
