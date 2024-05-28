@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include "features/achordion.h"
+// #include "features/orbital_mouse.h"
 
-#define COMBO_COUNT 10
 #define TAPPING_TERM 180
 
 #define __S LT(2,KC_S)
@@ -30,8 +30,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define __J MT(MOD_RSFT,KC_J)
 #define __K MT(MOD_LCTL,KC_K)
 #define __L LT(1,KC_L)
-#define __THUMB_LEFT_1 LT(2,KC_SPC)
-#define __THUMB_LEFT_2 KC_LSFT
+#define __THUMB_LEFT_1 KC_LSFT
+#define __THUMB_LEFT_2 LT(2,KC_SPC)
 #define __THUMB_LEFT_3 KC_MS_BTN1
 #define __THUMB_RIGHT_3 LT(1,KC_TAB)
 #define __THUMB_RIGHT_2 LT(3, KC_MS_BTN1)
@@ -40,7 +40,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 enum custom_keycodes {
     RARR = SAFE_RANGE,
     EQRARR,
-    UPDIR
+    UPDIR,
+    ATTR_EQ,
+    ALT_BACKTICK
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -48,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         TG(3),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_DEL,
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        KC_TAB,    KC_A,    __S,   __D,    __F,    __G,       __H,    __J,   __K,    __L, KC_SCLN, KC_QUOT,
+            KC_TAB,    LT(1, KC_A),    __S,   __D,    __F,    __G,                                __H,    __J,   __K,    __L, LT(3, KC_SCLN), KC_QUOT,
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RALT,
       //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -63,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         KC_BACKSLASH, KC_UNDERSCORE, KC_4, KC_5, KC_6, KC_MINUS,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, _______, KC_RALT,
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        _______, KC_SLSH, KC_1, KC_2, KC_3, KC_EQUAL,                      _______, KC_MS_WH_LEFT, KC_MS_WH_RIGHT, _______, _______, _______,
+        _______, KC_SLSH, KC_1, KC_2, KC_3, KC_EQUAL,                      CW_TOGG, KC_BSPC, KC_ENT, KC_ESC, _______, _______,
       //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        _______, KC_UNDERSCORE,  KC_0,     KC_ENT, _______, _______
+                                        _______, KC_DOT,  KC_0,     KC_ENT, _______, _______
                                           //`--------------------------'  `--------------------------'
     ),
 
@@ -75,19 +77,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         KC_WWW_REFRESH, QK_CAPS_WORD_TOGGLE, _______, KC_LEFT_ANGLE_BRACKET, KC_RIGHT_ANGLE_BRACKET, _______,                      KC_PERC,  KC_DLR, KC_LCBR, KC_RCBR, KC_EXLM,  KC_TILD,
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        _______, _______, _______, EQRARR, RARR, _______,                      KC_PIPE, KC_HASH, KC_LBRC, KC_RBRC, KC_AT, KC_RALT,
+        _______, ALT_BACKTICK, ATTR_EQ, EQRARR, RARR, _______,                      KC_PIPE, KC_HASH, KC_LBRC, KC_RBRC, KC_AT, KC_RALT,
       //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        _______, _______,  _______,     _______, KC_MS_WH_UP, KC_MS_DOWN
+                                        _______, _______,  _______,     KC_MS_WH_DOWN, KC_MS_WH_UP, KC_MS_DOWN
                                           //`--------------------------'  `--------------------------'
     ),
 
     [3] = LAYOUT_split_3x6_3(
       //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        _______, _______, KC_MS_WH_LEFT, KC_MS_UP, KC_MS_WH_RIGHT, KC_MS_WH_UP,                      _______, _______, _______, _______, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,
+        _______, _______, KC_MS_WH_LEFT, KC_MS_UP, KC_MS_WH_RIGHT, _______,                      _______, _______ ,_______, _______, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        _______, _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_MS_WH_DOWN,                      _______, _______, _______, _______, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP,
+            _______, _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, _______,                      _______, _______, _______, _______, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP,
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, KC_AUDIO_MUTE, KC_MEDIA_PLAY_PAUSE,
+        _______, _______, KC_MS_WH_UP, KC_MS_BTN3, KC_MS_WH_DOWN, _______,                      _______, _______, _______, _______, KC_AUDIO_MUTE, KC_MEDIA_PLAY_PAUSE,
       //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                 KC_MS_BTN3, KC_MS_BTN2,  KC_MS_BTN1,     _______, _______, _______
                                           //`--------------------------'  `--------------------------'
@@ -109,6 +111,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (!process_achordion(keycode, record)) { return false; }
+    // if (!process_orbital_mouse(keycode, record)) { return false; }
+
 
     switch (keycode) {
         case RARR:
@@ -125,6 +129,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             if (record->event.pressed) {
                 SEND_STRING("../");
             }
+            return false;
+        case ATTR_EQ:
+            if (record->event.pressed) {
+                SEND_STRING("=\"\"");
+                tap_code(KC_LEFT);
+            }
+            return false;
+        case ALT_BACKTICK:
+            if (record->event.pressed) {
+                SEND_STRING(SS_RALT("`"));
+            }
+            return false;
     }
 
     return true;
@@ -152,16 +168,19 @@ void matrix_scan_user(void) {
     achordion_task();
 }
 
+#define COMBO_COUNT 12
 const uint16_t PROGMEM backspace_combo[]    = { __J, __K, COMBO_END };
 const uint16_t PROGMEM escape_combo[]       = { __F, __D, COMBO_END };
-const uint16_t PROGMEM space_combo[]        = { __S, __D, COMBO_END };
 const uint16_t PROGMEM enter_combo[]        = { __K, __L, COMBO_END };
 const uint16_t PROGMEM click_combo[]        = { KC_C, KC_V, COMBO_END };
 const uint16_t PROGMEM click_combo_2[]      = { KC_U, __J, COMBO_END };
 const uint16_t PROGMEM click_combo_3[]      = { __F, KC_R, COMBO_END };
+const uint16_t PROGMEM click_combo_4[]      = { __F, KC_V, COMBO_END };
 const uint16_t PROGMEM scroll_down_combo[]  = {  __G, KC_B, COMBO_END };
 const uint16_t PROGMEM scroll_up_combo[]    = {  __G, KC_T, COMBO_END };
 const uint16_t PROGMEM middle_click_combo[] = { KC_E, __D, COMBO_END };
+const uint16_t PROGMEM space_combo[]        = { __F, __J, COMBO_END };
+const uint16_t PROGMEM space_combo2[]       = { __S, __D, COMBO_END };
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(backspace_combo, KC_BSPC),
@@ -171,7 +190,9 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(click_combo, KC_MS_BTN1),
     COMBO(click_combo_2, KC_MS_BTN1),
     COMBO(click_combo_3, KC_MS_BTN1),
+    COMBO(click_combo_4, KC_MS_BTN1),
     COMBO(scroll_down_combo, KC_MS_WH_DOWN),
     COMBO(scroll_up_combo, KC_MS_WH_UP),
     COMBO(middle_click_combo, KC_MS_BTN3),
+    COMBO(space_combo2, KC_SPC),
 };

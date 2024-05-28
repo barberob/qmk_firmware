@@ -12,13 +12,11 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+    You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #pragma once
-
-/* Select hand configuration */
 
 #define MASTER_LEFT
 // #define MASTER_RIGHT
@@ -28,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DYNAMIC_KEYMAP_LAYER_COUNT 5
 
 // custom
-// #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 #define AUTO_SHIFT_TIMEOUT 250
 #define TAPPING_TERM 180
@@ -37,3 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PS2_MOUSE_X_MULTIPLIER TRACKPOINT_MULTIPLIER
 #define PS2_MOUSE_Y_MULTIPLIER TRACKPOINT_MULTIPLIER
 #define CAPS_WORD_INVERT_ON_SHIFT
+
+// achordion
+#define PERMISSIVE_HOLD
+#define QUICK_TAP_TERM_PER_KEY
+#define ACHORDION_STREAK
+#define RETRO_TAPPING
