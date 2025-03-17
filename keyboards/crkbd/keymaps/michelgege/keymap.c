@@ -33,8 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define __M LT(2, KC_M)
 
 #define __THUMB_LEFT_1 LT(1, KC_SPC)
-#define __THUMB_LEFT_2 KC_SPC
-#define __THUMB_LEFT_3 LT(2,KC_SPC)
+#define __THUMB_LEFT_2 MT(MOD_LCTL, KC_SPC)
+#define __THUMB_LEFT_3 MT(MOD_LSFT, KC_SPC)
 #define __THUMB_RIGHT_3 MT(MOD_LSFT, KC_TAB)
 #define __THUMB_RIGHT_2 MT(MOD_LCTL, KC_SPC)
 #define __THUMB_RIGHT_1 LT(4,KC_ENT)
@@ -164,7 +164,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record, uint16_t other_keycode, keyrecord_t* other_record) {
     switch(tap_hold_keycode) {
         case __THUMB_LEFT_1:
-        case __THUMB_LEFT_2:
+        // case __THUMB_LEFT_2: // pareil que thumb_right_2
         case __THUMB_LEFT_3:
         case __THUMB_RIGHT_3:
         case __THUMB_RIGHT_2:
@@ -196,9 +196,9 @@ const uint16_t PROGMEM click_combo_5[] = { KC_C, KC_V, COMBO_END };
 const uint16_t PROGMEM click_combo_6[] = { __M, KC_COMM, COMBO_END };
 const uint16_t PROGMEM middle_click_combo[] = { KC_E, __D, COMBO_END };
 const uint16_t PROGMEM right_click_combo[] = { __G, KC_T, COMBO_END };
+const uint16_t PROGMEM right_click_combo2[] = { __H, KC_Y, COMBO_END };
 const uint16_t PROGMEM scroll_down_combo[] = { __G, KC_B, COMBO_END };
 const uint16_t PROGMEM scroll_up_combo[] = { KC_X, KC_C, COMBO_END };
-
 // Initialize the key_combos array using the pre-defined arrays
 combo_t key_combos[] = {
     COMBO(backspace_combo, KC_BSPC),
@@ -213,6 +213,7 @@ combo_t key_combos[] = {
     COMBO(click_combo_6, KC_MS_BTN1),
     COMBO(middle_click_combo, KC_MS_BTN3),
     COMBO(right_click_combo, KC_MS_BTN2),
+    COMBO(right_click_combo2, KC_MS_BTN2),
     COMBO(scroll_down_combo, KC_MS_WH_DOWN),
     COMBO(scroll_up_combo, KC_MS_WH_UP),
 };
