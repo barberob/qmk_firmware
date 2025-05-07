@@ -32,10 +32,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define __QUOT LT(4, KC_QUOT)
 #define __M LT(2, KC_M)
 
-#define __THUMB_LEFT_1 LT(1, KC_SPC)
+#define __THUMB_LEFT_1 LT(1, KC_ENT)
 #define __THUMB_LEFT_2 MT(MOD_LCTL, KC_SPC)
 #define __THUMB_LEFT_3 MT(MOD_LSFT, KC_SPC)
-#define __THUMB_RIGHT_3 MT(MOD_LSFT, KC_TAB)
+#define __THUMB_RIGHT_3 LT(3, KC_TAB)
 #define __THUMB_RIGHT_2 MT(MOD_LCTL, KC_SPC)
 #define __THUMB_RIGHT_1 LT(4,KC_ENT)
 
