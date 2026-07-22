@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EE_HANDS
 
 #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
-#define DYNAMIC_KEYMAP_LAYER_COUNT 5
+#define DYNAMIC_KEYMAP_LAYER_COUNT 6
 
 // custom
 #define AUTO_SHIFT_TIMEOUT 250

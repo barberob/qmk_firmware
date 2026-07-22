@@ -39,6 +39,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define __THUMB_RIGHT_2 MT(MOD_LCTL, KC_SPC)
 #define __THUMB_RIGHT_1 LT(4,KC_ENT)
 
+// Colemak DH mod-taps (same physical positions as QWERTY ones)
+#define __S_DH LT(2,KC_R)
+#define __D_DH MT(MOD_LCTL,KC_S)
+#define __F_DH MT(MOD_LSFT,KC_T)
+#define __G_DH MT(MOD_LALT,KC_G)
+#define __H_DH MT(MOD_LALT,KC_M)
+#define __J_DH MT(MOD_RSFT,KC_N)
+#define __K_DH MT(MOD_LCTL,KC_E)
+#define __L_DH LT(1,KC_I)
+#define __QUOT_DH LT(4, KC_QUOT)
+#define __M_DH LT(2, KC_H)
+
 enum custom_keycodes {
     RARR = SAFE_RANGE,
     EQRARR,
@@ -53,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // qwerty
     [0] = LAYOUT_split_3x6_3(
       //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        QK_CAPS_WORD_TOGGLE,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_DEL,
+                    TG(5),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_DEL,
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
             KC_TAB,    LT(1, KC_A),    __S,   __D,    __F,    __G,                                __H,    __J,   __K,    __L, LT(3, KC_SCLN), __QUOT,
       //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -110,6 +122,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         _______,  _______,QK_CAPS_WORD_TOGGLE,     _______, _______, _______
                                           //`--------------------------'  `--------------------------'
+    ),
+
+    [5] = LAYOUT_split_3x6_3(
+      //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+                    TG(5),    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_DEL,
+      //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+            KC_TAB,    LT(1, KC_A), __S_DH,  __D_DH,  __F_DH,  __G_DH,                         __H_DH,  __J_DH,  __K_DH,  __L_DH, LT(3, KC_O), __QUOT_DH,
+      //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+        KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    __M_DH, KC_COMM,  KC_DOT, KC_SLSH,  KC_RALT,
+      //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+            __THUMB_LEFT_1, __THUMB_LEFT_2, __THUMB_LEFT_3,                     __THUMB_RIGHT_3,   __THUMB_RIGHT_2, __THUMB_RIGHT_1
+                                      //`--------------------------'  `--------------------------'
     ),
 };
 
@@ -183,6 +207,40 @@ void matrix_scan_user(void) {
     achordion_task();
 }
 
+enum combo_events {
+    COMBO_BS_QW,
+    COMBO_ESC_QW,
+    COMBO_ENT_QW,
+    COMBO_SPC_QW,
+    COMBO_SPC2_QW,
+    COMBO_CLK2_QW,
+    COMBO_CLK3_QW,
+    COMBO_CLK4_QW,
+    COMBO_CLK5_QW,
+    COMBO_CLK6_QW,
+    COMBO_MCLK_QW,
+    COMBO_RCLK_QW,
+    COMBO_RCLK2_QW,
+    COMBO_SCRD_QW,
+    COMBO_SCRU_QW,
+    COMBO_BS_DH,
+    COMBO_ESC_DH,
+    COMBO_ENT_DH,
+    COMBO_SPC_DH,
+    COMBO_SPC2_DH,
+    COMBO_CLK2_DH,
+    COMBO_CLK3_DH,
+    COMBO_CLK4_DH,
+    COMBO_CLK5_DH,
+    COMBO_CLK6_DH,
+    COMBO_MCLK_DH,
+    COMBO_RCLK_DH,
+    COMBO_RCLK2_DH,
+    COMBO_SCRD_DH,
+    COMBO_SCRU_DH,
+    COMBO_COUNT
+};
+
 // Define combo arrays separately
 const uint16_t PROGMEM backspace_combo[] = { __J, __K, COMBO_END };
 const uint16_t PROGMEM escape_combo[] = { __F, __D, COMBO_END };
@@ -199,24 +257,60 @@ const uint16_t PROGMEM right_click_combo[] = { __G, KC_T, COMBO_END };
 const uint16_t PROGMEM right_click_combo2[] = { __H, KC_Y, COMBO_END };
 const uint16_t PROGMEM scroll_down_combo[] = { __G, KC_B, COMBO_END };
 const uint16_t PROGMEM scroll_up_combo[] = { KC_X, KC_C, COMBO_END };
+
+const uint16_t PROGMEM backspace_combo_dh[] = { __J_DH, __K_DH, COMBO_END };
+const uint16_t PROGMEM escape_combo_dh[] = { __F_DH, __D_DH, COMBO_END };
+const uint16_t PROGMEM enter_combo_dh[] = { __K_DH, __L_DH, COMBO_END };
+const uint16_t PROGMEM space_combo_dh[] = { __F_DH, __J_DH, COMBO_END };
+const uint16_t PROGMEM space_combo2_dh[] = { __S_DH, __D_DH, COMBO_END };
+const uint16_t PROGMEM click_combo_2_dh[] = { KC_L, __J_DH, COMBO_END };
+const uint16_t PROGMEM click_combo_3_dh[] = { __F_DH, KC_P, COMBO_END };
+const uint16_t PROGMEM click_combo_4_dh[] = { __F_DH, KC_D, COMBO_END };
+const uint16_t PROGMEM click_combo_5_dh[] = { KC_C, KC_D, COMBO_END };
+const uint16_t PROGMEM click_combo_6_dh[] = { __M_DH, KC_COMM, COMBO_END };
+const uint16_t PROGMEM middle_click_combo_dh[] = { KC_F, __D_DH, COMBO_END };
+const uint16_t PROGMEM right_click_combo_dh[] = { __G_DH, KC_B, COMBO_END };
+const uint16_t PROGMEM right_click_combo2_dh[] = { __H_DH, KC_J, COMBO_END };
+const uint16_t PROGMEM scroll_down_combo_dh[] = { __G_DH, KC_V, COMBO_END };
+const uint16_t PROGMEM scroll_up_combo_dh[] = { KC_X, KC_C, COMBO_END };
+
 // Initialize the key_combos array using the pre-defined arrays
 combo_t key_combos[] = {
-    COMBO(backspace_combo, KC_BSPC),
-    COMBO(escape_combo, KC_ESC),
-    COMBO(enter_combo, KC_ENT),
-    COMBO(space_combo, KC_SPC),
-    COMBO(space_combo2, KC_SPC),
-    COMBO(click_combo_2, KC_MS_BTN1),
-    COMBO(click_combo_3, KC_MS_BTN1),
-    COMBO(click_combo_4, KC_MS_BTN1),
-    COMBO(click_combo_5, KC_MS_BTN1),
-    COMBO(click_combo_6, KC_MS_BTN1),
-    COMBO(middle_click_combo, KC_MS_BTN3),
-    COMBO(right_click_combo, KC_MS_BTN2),
-    COMBO(right_click_combo2, KC_MS_BTN2),
-    COMBO(scroll_down_combo, KC_MS_WH_DOWN),
-    COMBO(scroll_up_combo, KC_MS_WH_UP),
+    [COMBO_BS_QW] = COMBO(backspace_combo, KC_BSPC),
+    [COMBO_ESC_QW] = COMBO(escape_combo, KC_ESC),
+    [COMBO_ENT_QW] = COMBO(enter_combo, KC_ENT),
+    [COMBO_SPC_QW] = COMBO(space_combo, KC_SPC),
+    [COMBO_SPC2_QW] = COMBO(space_combo2, KC_SPC),
+    [COMBO_CLK2_QW] = COMBO(click_combo_2, KC_MS_BTN1),
+    [COMBO_CLK3_QW] = COMBO(click_combo_3, KC_MS_BTN1),
+    [COMBO_CLK4_QW] = COMBO(click_combo_4, KC_MS_BTN1),
+    [COMBO_CLK5_QW] = COMBO(click_combo_5, KC_MS_BTN1),
+    [COMBO_CLK6_QW] = COMBO(click_combo_6, KC_MS_BTN1),
+    [COMBO_MCLK_QW] = COMBO(middle_click_combo, KC_MS_BTN3),
+    [COMBO_RCLK_QW] = COMBO(right_click_combo, KC_MS_BTN2),
+    [COMBO_RCLK2_QW] = COMBO(right_click_combo2, KC_MS_BTN2),
+    [COMBO_SCRD_QW] = COMBO(scroll_down_combo, KC_MS_WH_DOWN),
+    [COMBO_SCRU_QW] = COMBO(scroll_up_combo, KC_MS_WH_UP),
+    [COMBO_BS_DH] = COMBO(backspace_combo_dh, KC_BSPC),
+    [COMBO_ESC_DH] = COMBO(escape_combo_dh, KC_ESC),
+    [COMBO_ENT_DH] = COMBO(enter_combo_dh, KC_ENT),
+    [COMBO_SPC_DH] = COMBO(space_combo_dh, KC_SPC),
+    [COMBO_SPC2_DH] = COMBO(space_combo2_dh, KC_SPC),
+    [COMBO_CLK2_DH] = COMBO(click_combo_2_dh, KC_MS_BTN1),
+    [COMBO_CLK3_DH] = COMBO(click_combo_3_dh, KC_MS_BTN1),
+    [COMBO_CLK4_DH] = COMBO(click_combo_4_dh, KC_MS_BTN1),
+    [COMBO_CLK5_DH] = COMBO(click_combo_5_dh, KC_MS_BTN1),
+    [COMBO_CLK6_DH] = COMBO(click_combo_6_dh, KC_MS_BTN1),
+    [COMBO_MCLK_DH] = COMBO(middle_click_combo_dh, KC_MS_BTN3),
+    [COMBO_RCLK_DH] = COMBO(right_click_combo_dh, KC_MS_BTN2),
+    [COMBO_RCLK2_DH] = COMBO(right_click_combo2_dh, KC_MS_BTN2),
+    [COMBO_SCRD_DH] = COMBO(scroll_down_combo_dh, KC_MS_WH_DOWN),
+    [COMBO_SCRU_DH] = COMBO(scroll_up_combo_dh, KC_MS_WH_UP),
 };
 
-// Automatically calculate the combo count
-#define COMBO_COUNT (sizeof(key_combos) / sizeof(key_combos[0]))
+bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
+    if (layer_state_is(5)) {
+        return combo_index >= COMBO_BS_DH;
+    }
+    return combo_index < COMBO_BS_DH;
+}
