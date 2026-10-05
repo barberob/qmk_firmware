@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define __THUMB_LEFT_2 MT(MOD_LCTL, KC_SPC)
 #define __THUMB_LEFT_3 MT(MOD_LSFT, KC_SPC)
 #define __THUMB_RIGHT_3 LT(3, KC_TAB)
-#define __THUMB_RIGHT_2 MT(MOD_LCTL, KC_SPC)
+#define __THUMB_RIGHT_2 KC_F8
 #define __THUMB_RIGHT_1 LT(4,KC_ENT)
 
 // Colemak DH mod-taps (same physical positions as QWERTY ones)
